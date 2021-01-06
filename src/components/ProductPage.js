@@ -7,23 +7,51 @@ export default function ProductPage(){
     const id = "5fe0bc0677b5db4a6dcce7a5"
 
     if(!dataFetched){
-        fetch("https://mech-switches.herokuapp.com/switches/5fe0bc0677b5db4a6dcce7a5")
+        fetch("https://mech-switches.herokuapp.com/switches/" + id)
             .then(response => response.json())
             .then(data => setSwitchObject(data[0]))
             .then(setDataFetched(true))
 
         
-       console.log(switchObject)
+       //console.log(switchObject)
         
     }
     
 
     return(
-       
-        <div id="product-page" className="container">
+
+        <div id="product-page" className="container pt-4">
             <div className="row align-items-start" style={{"color":"#E2C2C6"}}>
                 <div className="col">
-                    <img src="https://www.cherrymx.de/_Resources/Persistent/d4e5d661da4d28eb2c5d6321289c29ac2d6cbd56/img-productstage-mxRed%402x_100-368x368.png" className="img-fluid" />
+                    <div id="productCarousel" className="carousel slide" data-bs-ride="carousel">
+                        <div className="carousel-inner">
+                            {switchObject ? 
+                            switchObject.images.map((item, i) => (
+         
+                                    i == 0
+                                    ?
+                                    <div className="carousel-item active">
+                                        <img src={item} className="d-block w-100" alt="" />
+                                    </div>
+                                    :
+                                    <div className="carousel-item ">
+                                        <img src={item} className="d-block w-100" alt="" />
+                                    </div>
+                                
+                            ))
+                            : ""
+                            }
+
+                        </div>
+                        <a class="carousel-control-prev" href="#productCarousel" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#productCarousel" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
                 </div>
                 <div className="col">
                     <table className="table table-dark" style={{"color":"#E2C2C6"}}>
@@ -84,17 +112,37 @@ export default function ProductPage(){
                                     {switchObject ? switchObject.travelDistance +"mm" : "Loading"}
                                 </td>
                             </tr>
+                            <tr>
+                                <th scope="col">
+                                    Spring Weights
+                                </th>
+                                <td>
+                                    {
+                                        switchObject
+                                        ?
+                                            switchObject.springWeight > 0
+                                            ?
+                                            switchObject.springWeight.map((item, i) => (
+                                                item + ","
+                                            ))
+                                            : "Data Not available"
+                                        : "Loading"
+                                    }
+                                    
+                                </td>
+                            </tr>
+                                
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div className="row">
-                <div className="container border rounded border-dark" style={{"background-color": "black", "color": "#E2C2C6"}}>
-                    <p>
+            <div className="row pt-3">
+                <div className="container border rounded-3 border-dark" style={{"background-color": "black", "color": "#E2C2C6"}}>
+                    <p className="h3">
                         Manufacture Description
                     </p>
                     <p>
-                        The linear switching characteristic combined with the low spring resistance triggers directly. The CHERRY MX Red is the first choice for beginners in the world of mechanical keyboards. The smooth-running CHERRY MX technology enables balanced writing and gaming sessions.
+                        {switchObject ? switchObject.manufacturerDescription : "Loading"}
                     </p>
                 </div>
                 
