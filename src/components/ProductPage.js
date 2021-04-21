@@ -1,21 +1,25 @@
 import react from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function ProductPage(){
     const [dataFetched, setDataFetched] = react.useState(false);
     const [switchObject, setSwitchObject] = react.useState(null);
 
-    const id = "5fe0bc0677b5db4a6dcce7a5"
+    let id = useParams()
+    console.log(id.id)
 
     if(!dataFetched){
-        fetch("https://mech-switches.herokuapp.com/switches/" + id)
+        fetch("https://mech-switches.herokuapp.com/switches/" + id.id)
             .then(response => response.json())
-            .then(data => setSwitchObject(data[0]))
+            .then(data => console.log(data[0]))
             .then(setDataFetched(true))
 
         
        //console.log(switchObject)
         
     }
+
+    
     
 
     return(

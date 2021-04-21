@@ -48,6 +48,9 @@ function App() {
 				<Route path="/example">
 					<ProductPage />
 				</Route>
+				<Route path="/switch/:id">
+					<ProductPage />
+				</Route>
 			</Switch>
 
 			
